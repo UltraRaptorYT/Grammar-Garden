@@ -147,7 +147,6 @@ class Game:
                 # formation
                 elif event.key == pygame.K_KP_ENTER:
                     self.answer = user_text
-                    print(self.answer)
                 else:
                     user_text += event.unicode
         pygame.draw.rect(self.screen, color, input_rect)

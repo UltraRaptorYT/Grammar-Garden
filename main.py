@@ -89,7 +89,6 @@ def question(game):
     with open(config.DIR_PATH + "/level.txt") as question_file:
         levelArr = list(question_file)
         randomIndex = np.random.randint(0, len(levelArr), 1)[0]
-        print(randomIndex)
         question_text = levelArr[randomIndex].replace("\s", " ")
     running = True
     base_font = pygame.font.Font(None, 32)
