@@ -34,13 +34,3 @@ preprocessor = CsgecPreprocessor(
     src_tokenizer=src_tokenizer, ctx_tokenizer=ctx_tokenizer
 )
 postprocessor = CsgecPostprocessor(tgt_tokenizer=tgt_tokenizer)
-
-texts = [
-    "Tommorrow I was died"
-]
-
-batch_source_ids, batch_context_ids = preprocessor(texts)
-predicted_ids = model.decode(batch_source_ids, batch_context_ids)
-predicted_texts = postprocessor(predicted_ids)
-
-print(predicted_texts)

@@ -145,6 +145,7 @@ def question(game):
                     if diff == user_text:
                         print("Congrats")
                         game.days += 1
+                        game.coins += 10
                         print(game.map)
                         fRead = open(config.DIR_PATH + '/storage.json', "r")
                         data = json.load(fRead)
@@ -173,7 +174,7 @@ def question(game):
             color = color_active
         else:
             color = color_passive
-        draw_text(f"{question_text}", font, config.BLACK, screen,
+        draw_text(f"{question_text[:-1]}", font, config.BLACK, screen,
                   config.SCREEN_WIDTH / 2, config.SCREEN_HEIGHT/2 - 50)
         draw_text("Type out the wrong word from the sentence", font, config.BLACK, screen,
                   config.SCREEN_WIDTH / 2, config.SCREEN_HEIGHT/2 - 150)

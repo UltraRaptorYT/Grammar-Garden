@@ -4,6 +4,7 @@ import math
 from player import Player
 from game_state import GameState
 import json
+import numpy as np
 
 
 class Game:
@@ -21,7 +22,9 @@ class Game:
         f = open(config.DIR_PATH + '/storage.json', "r")
         data = json.load(f)
         self.days = data["days"]
+        self.coins = data["coins"]
         f.close()
+        self.np_map = np.array(self.map)
 
     def set_up(self):
         player = Player(3, 5)
@@ -73,6 +76,7 @@ class Game:
                 for i in line.split():
                     tiles.append(i)
                 self.map.append(tiles)
+        self.np_map = np.array(self.map)
 
     def render_map(self, screen):
         self.determine_camera()
@@ -86,7 +90,6 @@ class Game:
                                    (self.camera[1] * config.SCALE), config.SCALE, config.SCALE)
                 screen.blit(image, rect)
                 x_pos = x_pos + 1
-
             y_pos = y_pos + 1
 
     def move_unit(self, unit, position_change):
@@ -108,6 +111,9 @@ class Game:
         if self.map[new_position[1]][new_position[0]] in noncollide:
             return
         unit.update_position(new_position, direction)
+        stand_map = self.np_map[new_position[1]][new_position[0]]
+        if stand_map == "6" or "P" in stand_map:
+            unit.plant()
 
     def determine_camera(self):
         max_y_position = len(self.map) - config.SCREEN_HEIGHT / config.SCALE

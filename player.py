@@ -55,7 +55,6 @@ class Player:
         if direction != "":
             self.direction = direction
         self.check_position()
-        self.plant()
 
     def check_position(self, pressed=False):
         if (self.position[0] == 2 or self.position[0] == 3) and self.position[1] == 5:
@@ -66,6 +65,7 @@ class Player:
 
     def plant(self, pressed=False):
         print(self.position)
+        return self.position
 
     def update_direction(self, direction):
         if direction != "":
