@@ -33,6 +33,7 @@ click = False
 
 
 def main_menu():
+    global click
     while True:
         screen.fill((0, 0, 0))
         bg = pygame.image.load(config.DIR_PATH + "/images/background.png")
