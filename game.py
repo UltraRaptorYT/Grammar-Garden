@@ -4,7 +4,6 @@ import math
 from player import Player
 from game_state import GameState
 import json
-import numpy as np
 
 
 class Game:
@@ -23,8 +22,8 @@ class Game:
         data = json.load(f)
         self.days = data["days"]
         self.coins = data["coins"]
+        self.showText = False
         f.close()
-        self.np_map = np.array(self.map)
 
     def set_up(self):
         player = Player(3, 5)
@@ -47,6 +46,9 @@ class Game:
                 self.question_popup()
             for object in self.objects:
                 object.render(self.screen, self.camera)
+            if self.showText:
+                self.load_text("Press P to plant potato",
+                               config.BLACK, self.screen, config.SCREEN_WIDTH/2, 50)
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -68,6 +70,9 @@ class Game:
                     show, check = self.player.check_position(True)
                     if check:
                         self.question = True
+                elif event.key == pygame.K_p:
+                    if self.showText:
+                        print("Planting Seed")
 
     def load_map(self, file_name):
         with open('maps/' + file_name + ".txt") as map_file:
@@ -76,7 +81,6 @@ class Game:
                 for i in line.split():
                     tiles.append(i)
                 self.map.append(tiles)
-        self.np_map = np.array(self.map)
 
     def render_map(self, screen):
         self.determine_camera()
@@ -111,9 +115,13 @@ class Game:
         if self.map[new_position[1]][new_position[0]] in noncollide:
             return
         unit.update_position(new_position, direction)
-        stand_map = self.np_map[new_position[1]][new_position[0]]
+        stand_map = self.map[new_position[1]][new_position[0]]
         if stand_map == "6" or "P" in stand_map:
+            if stand_map == "6":
+                self.showText = True
             unit.plant()
+        else:
+            self.showText = False
 
     def determine_camera(self):
         max_y_position = len(self.map) - config.SCREEN_HEIGHT / config.SCALE
