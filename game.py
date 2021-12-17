@@ -116,10 +116,8 @@ class Game:
             return
         unit.update_position(new_position, direction)
         stand_map = self.map[new_position[1]][new_position[0]]
-        if stand_map == "6" or "P" in stand_map:
-            if stand_map == "6":
-                self.showText = True
-            unit.plant()
+        if stand_map == "6":
+            self.showText = True
         else:
             self.showText = False
 
